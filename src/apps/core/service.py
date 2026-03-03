@@ -20,6 +20,8 @@ class CoreService:
         """Fetches data from an external service using the HttpClient."""
         if base_url:
             self.http_client.base_url = base_url
+        params = params or {}
+        params.update({"location": params.get("location", "United States")})
         response = await self.http_client.get(
             endpoint=endpoint, params=params, extra_headers=extra_headers
         )
@@ -27,8 +29,5 @@ class CoreService:
             "response from job platform:::::: "
             f"{response}"
         )
+        # TODO: save jobs in db; analyze with llm, then perform other necessary actions.
         return response.get("jobs", [])
-
-    async def post_data(self, endpoint: str, payload: dict) -> dict:
-        """Posts data to an external service using the HttpClient."""
-        return await self.http_client.post(endpoint=endpoint, payload=payload)

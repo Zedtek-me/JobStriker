@@ -1,0 +1,32 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jobstriker:latest
+    container_name: jobstriker-api
+    volumes:
+      .:/jobstriker
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    container_name: jobstriker-redis
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    env_file:
+      - .env
+
+networks:
+  default:
+    name: jobstriker-network
+
+volumes:
+  redis-data:
