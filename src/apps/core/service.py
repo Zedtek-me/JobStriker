@@ -14,7 +14,7 @@ class CoreService:
         self.http_client = HttpClient(base_url=self.CAREER_JET_API_URL)
 
     async def fetch_jobs(
-        self, endpoint: str, params: dict = None, base_url: Optional[str] = None,
+        self, endpoint: str, params: Optional[dict] = None, base_url: Optional[str] = None,
         extra_headers: Optional[dict] = None
     ) -> dict:
         """Fetches data from an external service using the HttpClient."""
